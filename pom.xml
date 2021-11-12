@@ -98,14 +98,14 @@
 	
 	    <repository>
 	      <id>nexus</id>
-	      <name>Mithun Technologies Releases Nexus Repository</name>
-	      <url>http://13.126.99.162:9980/nexus/repository/wallmart-release/</url>
+	      <name>Maven-web-app</name>
+	      <url>http://15.206.195.126:8629/repository/maven-web-app-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
-	      <name>Mithun Technologies Snapshot Nexus Repository </name>
-	      <url>http://13.126.99.162:9980/nexus/repository/wallmart-snapshot/</url>
+	      <name>Maven-web-app</name>
+	      <url>http://15.206.195.126:8629/repository/maven-web-app-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
