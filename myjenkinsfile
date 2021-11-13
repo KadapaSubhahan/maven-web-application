@@ -12,7 +12,7 @@ node('master'){
 	stage('build docker image'){
 		sshagent(['eb290106-de52-4ea6-bc64-68d22e6715c9']) {
 			sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker rmi -f maven-web-application || true"
-			sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker build -t maven-web-app-shanpshot/maven-web-application:1 maven-web-application/Dockerfile"
+			sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker build -t maven-web-app-shanpshot/maven-web-application:1 maven-web-application/"
 		}
 	}
 	stage('docker login and push into nexus'){
