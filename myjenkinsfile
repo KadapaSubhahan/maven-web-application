@@ -18,7 +18,7 @@ node('master'){
 	stage('docker login and push into nexus'){
 		sshagent(['eb290106-de52-4ea6-bc64-68d22e6715c9']) {
 		withCredentials([string(credentialsId: 'a6b69cc6-c192-4767-bbea-0663543f7256', variable: 'nexuspasswd')]) {
-			sh " ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker login -u admin -p ${nexuspasswd} http://35.154.161.105:8629/ "
+			sh " ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker login http://35.154.161.105:8629 -u admin -p ${nexuspasswd} "
 		}
 			sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker push maven-web-app-shanpshot/maven-web-application:1" 
 		}
