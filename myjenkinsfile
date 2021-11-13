@@ -1,0 +1,33 @@
+node('master'){
+	def mavenHome = tool name:"maven3.8.2"
+	stage("checkoutcode"){
+		git branch: 'development', credentialsId: '55b2a684-c7ec-473c-9d6b-43896d3420b9', url: 'https://github.com/KadapaSubhahan/maven-web-application.git'	
+	}
+	stage('build'){
+		sh "${mavenHome}/bin/mvn clean package"
+	}
+	stage('sonarqubereport'){
+		sh "${mavenHome}/bin/mvn sonar:sonar"
+	}
+	stage('build docker image'){
+		sshagent(['eb290106-de52-4ea6-bc64-68d22e6715c9']) {
+			sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker rmi -f maven-web-application || true"
+			sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker build -t maven-web-app-shanpshot/maven-web-application:1 ."
+		}
+	}
+	stage('docker login and push into nexus'){
+		withCredentials([string(credentialsId: 'a6b69cc6-c192-4767-bbea-0663543f7256', variable: 'nexuspasswd')]) {
+			sh "docker login -u admin -p ${nexuspasswd} http://35.154.161.105:8629 "
+		}
+		sshagent(['eb290106-de52-4ea6-bc64-68d22e6715c9']) {
+			sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker push maven-web-app-shanpshot/maven-web-application:1" 
+		}
+	}
+	stage('deploy app as container'){
+		sshagent(['18a6bd80-4553-4b46-8eb1-a8caa144545f']) {
+			sh "ssh -o StrictHostKeyChecking=no ubuntu@35.154.183.177 docker rm -f mwa || true"
+			sh "ssh -o StrictHostKeyChecking=no ubuntu@35.154.183.177 docker run -d --name mwa -p 9090:8080 maven-web-app-shanpshot/maven-web-application:1"
+		}
+	}
+	
+}
