@@ -23,7 +23,7 @@ node('master'){
 		} 
 		/*
 		withCredentials([usernameColonPassword(credentialsId: '3a37518c-e384-4017-bc87-268620e431ac', variable: 'nexuscred')]) {
-    			sh " ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker login http://35.154.161.105:8629 -u admin -p ${nexuscred} "
+    			sh " ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker login http://35.154.161.105:8629 -u admin --password-stdin  ${nexuscred} "
 		}    */
 			sh "ssh -o StrictHostKeyChecking=no ubuntu@3.109.210.28 docker push maven-web-app-shanpshot/maven-web-application:1" 
 		}
