@@ -4,7 +4,7 @@
 	
 	<groupId>com.mt</groupId>
 	<artifactId>maven-web-application</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<name>maven-web-application</name>
@@ -111,6 +111,13 @@
 	
 	<build>
 		<finalName>maven-web-application</finalName>
+
+	    <plugins>
+        	<plugin>
+            	<groupId>org.springframework.boot</groupId>
+            	<artifactId>spring-boot-maven-plugin</artifactId>
+        	</plugin>
+	    </plugins>
 		
 		<plugins>
 			<plugin>
