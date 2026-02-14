@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM alpine/java:22-jdk
 
 WORKDIR /app
 
