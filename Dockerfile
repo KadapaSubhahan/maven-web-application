@@ -1,9 +1,11 @@
-FROM alpine/java:22-jdk
+FROM tomcat:9.0-jdk21-corretto
 
-WORKDIR /app
+# Optional: remove default apps
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-COPY target/maven-web-application.jar /app/maven-web-application.jar
+# Deploy your WAR as ROOT so it is available at "/"
+COPY target/maven-web-application.war /usr/local/tomcat/webapps/maven-web-application.war
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "/app/maven-web-application.jar"]
+CMD ["catalina.sh", "run"]
