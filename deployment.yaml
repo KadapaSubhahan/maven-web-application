@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mavenwebapplication
+  namespace: test-ns
+  labels:
+    app: mavenwebapplication
+    env: prod
+
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: mavenwebapplication
+      env: prod
+
+  template:
+    metadata:
+      labels:
+        app: mavenwebapplication
+        env: prod
+
+    spec:
+      containers:
+      - name: mavenwebapplication-container
+        image: subhahan/maven-web-app:26
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "250Mi"
+          requests:
+            cpu: "200m"
+            memory: "250Mi"
+        ports:
+        - containerPort: 8080
+          name: enu
+        lifecycle:
+          preStop:
+            exec:
+              command: ["sh", "-c", "sleep 10"]
+
+      terminationGracePeriodSeconds: 60
